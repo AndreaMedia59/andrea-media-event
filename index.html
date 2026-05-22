@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andrea Média — Événementiel</title>
+<meta name="description" content="Andrea Média — conception et production d'événements. Concerts, animations commerciales, opérations sur mesure pour marques et collectivités.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a15;
+    --surface: #0b1220;
+    --ink: #e0e8f0;
+    --muted: rgba(224, 232, 240, 0.65);
+    --faint: rgba(224, 232, 240, 0.4);
+    --rule: rgba(224, 232, 240, 0.1);
+    --accent: #00b4d8;
+    --maxw: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3 {
+    font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-weight: 700;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* HERO */
+  .hero { padding: 32px 0 64px; border-bottom: 1px solid var(--rule); }
+  /*
+    Le logo source 1536x1024 a un contenu utile de 644x430 à l'offset +445+244.
+    On l'affiche à height:800 → contenu utile = 336px de haut (≈x2 du précédent).
+    Margins négatifs : compensent le vide intégré au PNG pour caler le contenu utile
+    sur le bord gauche du texte (lignes "Événementiel" / "Conception & production…").
+    Source PNG intact, downscale fait par le navigateur — qualité maximale.
+  */
+  .brand {
+    margin: -46px 0 -56px -119px;
+  }
+  .brand img {
+    height: 274px;
+    width: auto;
+    max-width: none;
+    display: block;
+    vertical-align: top;
+  }
+  .hero .kicker {
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 32px;
+    color: var(--ink);
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero .intro {
+    max-width: 760px;
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+  .hero .intro:last-child { margin-bottom: 0; }
+
+  /* SECTIONS */
+  .block { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+  .block h2 {
+    font-size: clamp(28px, 3.6vw, 40px);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .block .sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 44px;
+    letter-spacing: 0.01em;
+  }
+
+  /* GALERIE */
+  .gallery {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+
+  .gallery.cols-2 { grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .gallery.cols-2 { grid-template-columns: repeat(2, 1fr); } }
+
+  figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  figure:hover { border-color: rgba(0, 180, 216, 0.4); }
+  figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  figure:hover img { transform: scale(1.03); }
+  figcaption {
+    padding: 14px 16px 18px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  /* VIDEO */
+  .video-wrap {
+    margin: 0 0 44px;
+    background: #000;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .video-wrap video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .video-wrap.standalone { margin-top: 36px; }
+  .video-wrap.vertical {
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .video-caption {
+    margin: -28px 0 44px;
+    padding: 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .video-wrap.vertical + .video-caption {
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* GROUPE DE PHOTOS (intercalé) */
+  .group { margin-bottom: 44px; }
+  .group:last-child { margin-bottom: 0; }
+  .group + .gallery { margin-top: 0; }
+  .gallery + .group { margin-top: 44px; }
+
+  /* BLOC PILIERS */
+  .pillars {
+    padding: 72px 0 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pillars .label {
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .pillars h2 {
+    font-size: clamp(26px, 3.6vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 48px;
+    color: var(--ink);
+    max-width: 760px;
+  }
+  .pillars h2 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .pillars-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) { .pillars-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .pillars-grid { grid-template-columns: repeat(4, 1fr); } }
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 24px 22px;
+    transition: border-color 0.25s ease;
+  }
+  .pillar:hover { border-color: rgba(0, 180, 216, 0.4); }
+  .pillar h3 {
+    font-size: 17px;
+    letter-spacing: -0.005em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .pillar p {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 96px 0 104px;
+    border-bottom: none;
+    background: var(--surface);
+    color: var(--ink);
+    border-top: 1px solid var(--rule);
+  }
+  .contact h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin: 0 0 22px;
+    color: var(--ink);
+  }
+  .contact p {
+    max-width: 620px;
+    color: var(--muted);
+    margin: 0 0 40px;
+    font-size: 17px;
+  }
+  .contact .links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+  }
+  .contact .links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 3px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    width: fit-content;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .contact .links a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+  .contact .arrow { color: var(--accent); margin-right: 14px; }
+  .contact .postal {
+    margin: 44px 0 0;
+    font-style: normal;
+    font-size: 14px;
+    color: var(--faint);
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+
+  /* FOOTER */
+  footer.mark {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 13px;
+    color: var(--faint);
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">
+      <img src="Logo%20blanc.png" alt="Andrea Média">
+    </div>
+    <p class="kicker">Événementiel</p>
+    <h1>Conception &amp; production<br>d'événements <em>sur mesure</em>.</h1>
+    <p class="intro">Entré en radio à 16 ans, j'y ai construit toute ma carrière — près de 30 ans à concevoir et produire des événements qui font vivre une antenne ou qui prolongent son lien avec le public. Concerts, animations commerciales saisonnières, opérations sur mesure pour des marques et des collectivités.</p>
+    <p class="intro">Avec Andrea Média, je mets cette expérience au service de vos projets : conception, scénographie, coordination des prestataires, animation et gestion sur place. De A à Z.</p>
+  </div>
+</header>
+
+<!-- ============================== CE QUE JE PORTE ============================== -->
+<section class="pillars">
+  <div class="wrap">
+    <p class="label">Ce que je porte sur vos projets</p>
+    <h2>Un interlocuteur unique, de la première intention <em>au démontage final</em>.</h2>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <h3>Conception &amp; ingénierie</h3>
+        <p>Format, scénographie, dispositif technique. L'événement est pensé pour servir votre objectif, pas l'inverse.</p>
+      </div>
+      <div class="pillar">
+        <h3>Pilotage de A à Z</h3>
+        <p>Repérage terrain, budget, prestataires, devis, négociation. Vous validez, vous n'exécutez pas.</p>
+      </div>
+      <div class="pillar">
+        <h3>Coordination &amp; animation</h3>
+        <p>Déroulé minute par minute le jour J. Tout le monde travaille ensemble, sans cafouillage.</p>
+      </div>
+      <div class="pillar">
+        <h3>Sur mesure ou packagé</h3>
+        <p>Création originale ou reprise d'un concept éprouvé, selon votre besoin, votre cible et votre budget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONCERTS ============================== -->
+<section class="block">
+  <div class="wrap">
+    <h2>Concerts</h2>
+    <p class="sub">Production complète — scénographie, technique, logistique, animation.</p>
+
+    <div class="video-wrap">
+      <video src="web/videos/concert-1.mp4" controls preload="metadata" playsinline poster="web/videos/concert-1-poster.jpg"></video>
+    </div>
+    <p class="video-caption">Aftermovie — Grand Live, Douai 40 ans</p>
+
+    <div class="gallery">
+      <figure><img src="web/concert/concert-2.jpg" alt="Concert" loading="lazy"></figure>
+      <figure><img src="web/concert/concert-3.jpg" alt="Concert" loading="lazy"></figure>
+      <figure><img src="web/concert/concert-1.jpg" alt="Concert" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OPERATIONS ============================== -->
+<section class="block">
+  <div class="wrap">
+    <h2>Opérations spéciales &amp; événements sur mesure</h2>
+    <p class="sub">Animations grand public, opérations de marque, créations sur mesure.</p>
+
+    <!-- Chasses aux œufs (groupe 3 photos) -->
+    <div class="group">
+      <div class="gallery">
+        <figure>
+          <img src="web/operations/op-eggs-1.jpg" alt="Chasse aux œufs en centre commercial" loading="lazy">
+          <figcaption>Animation « Chasse aux œufs » — Centre commercial (1/3)</figcaption>
+        </figure>
+        <figure>
+          <img src="web/operations/op-eggs-2.jpg" alt="Chasse aux œufs en centre commercial" loading="lazy">
+          <figcaption>Animation « Chasse aux œufs » — Centre commercial (2/3)</figcaption>
+        </figure>
+        <figure>
+          <img src="web/operations/op-eggs-3.jpg" alt="Chasse aux œufs en centre commercial" loading="lazy">
+          <figcaption>Animation « Chasse aux œufs » — Centre commercial (3/3)</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Vidéo verticale + photo associée : Journée mondiale de la chocolatine -->
+    <div class="video-wrap standalone vertical">
+      <video src="web/videos/event-1.mp4" controls preload="metadata" playsinline></video>
+    </div>
+    <p class="video-caption">Création d'un village « Journée mondiale de la chocolatine » — au cœur de Toulouse</p>
+
+    <!-- Première série de solos -->
+    <div class="gallery">
+      <figure>
+        <img src="web/operations/op-chocolatine.jpg" alt="Village Journée mondiale de la chocolatine à Toulouse" loading="lazy">
+        <figcaption>Journée mondiale de la chocolatine — vue du village, Toulouse</figcaption>
+      </figure>
+      <figure>
+        <img src="web/operations/op-valentin.jpg" alt="Émission spéciale Saint-Valentin" loading="lazy">
+        <figcaption>Émission spéciale Saint-Valentin — en direct de l'aéroport de Lille</figcaption>
+      </figure>
+      <figure>
+        <img src="web/operations/op-noel.jpg" alt="Émission de Noël depuis un marché de Noël" loading="lazy">
+        <figcaption>Émission RDL de Noël — en direct d'un marché de Noël</figcaption>
+      </figure>
+    </div>
+
+    <!-- Studio Aushopping (groupe 2 photos) -->
+    <div class="group">
+      <div class="gallery cols-2">
+        <figure>
+          <img src="web/operations/op-aushopping-1.jpg" alt="Studio radio éphémère Aushopping" loading="lazy">
+          <figcaption>Studio radio éphémère — Galerie Aushopping (1/2)</figcaption>
+        </figure>
+        <figure>
+          <img src="web/operations/op-aushopping-2.jpg" alt="Studio radio éphémère Aushopping" loading="lazy">
+          <figcaption>Studio radio éphémère — Galerie Aushopping (2/2)</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Deuxième série de solos -->
+    <div class="gallery">
+      <figure>
+        <img src="web/operations/op-cardin.jpg" alt="Émission de radio avec Charlotte Cardin" loading="lazy">
+        <figcaption>Émission de radio avec Charlotte Cardin</figcaption>
+      </figure>
+      <figure>
+        <img src="web/operations/op-casting.jpg" alt="Casting de chant en centre commercial" loading="lazy">
+        <figcaption>Casting de chant — en centre commercial</figcaption>
+      </figure>
+      <figure>
+        <img src="web/operations/op-streetmkt.jpg" alt="Street marketing distribution pains au chocolat Lille" loading="lazy">
+        <figcaption>Street marketing — distribution de pains au chocolat dans le centre de Lille</figcaption>
+      </figure>
+      <figure>
+        <img src="web/operations/op-voiture.jpg" alt="Émission spéciale depuis une concession" loading="lazy">
+        <figcaption>Émission spéciale en direct d'une concession — pour offrir une voiture</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="contact">
+  <div class="wrap">
+    <h2>Discutons de votre prochain projet.</h2>
+    <p>Une idée à creuser, un événement à imaginer, un coup de main sur une production en cours ? Je suis disponible pour en échanger.</p>
+    <div class="links">
+      <a href="mailto:johann.antigny@andreamedia.fr"><span class="arrow">→</span>johann.antigny@andreamedia.fr</a>
+      <a href="tel:+33688228880"><span class="arrow">→</span>06 88 22 88 80</a>
+    </div>
+    <address class="postal">
+      Andrea Média<br>
+      5 rue Albert Garin<br>
+      59350 Saint-André-lez-Lille
+    </address>
+  </div>
+</section>
+
+<footer class="mark">
+  <div class="wrap">© 2026 Andrea Média — Johann Antigny · Tous droits réservés</div>
+</footer>
+
+</body>
+</html>
